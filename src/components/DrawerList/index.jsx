@@ -9,6 +9,8 @@ const DrawerList = ({ users }) => {
 
   const { Sider, Content } = Layout;
 
+  const [ selectedUser, setSelectedUser] = useState(null);
+
   return (
     <Layout>
       <Sider
@@ -26,7 +28,11 @@ const DrawerList = ({ users }) => {
           dataSource={users}
           renderItem={(item) => (
             <List.Item
-              onClick={() => setShowMessages(true)}
+              onClick={() => {
+                setShowMessages(true);
+                setSelectedUser(item)
+                }   
+              }
               style={{
                 cursor: "pointer",
               }}
@@ -49,7 +55,7 @@ const DrawerList = ({ users }) => {
         />
       </Sider>
       <Layout>
-        <Content>{showMessages ? <MessageList /> : <EmptyChat />}</Content>
+        <Content>{showMessages ? <MessageList user={selectedUser} /> : <EmptyChat />}</Content>
       </Layout>
     </Layout>
   );

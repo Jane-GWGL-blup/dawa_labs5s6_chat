@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ModalRegister, DrawerList } from "../../components";
 import { get } from "../../service";
+import HeaderLayout from "../../layout"
 //Add pusher
 import Pusher from "pusher-js";
 
@@ -8,7 +9,10 @@ const Chat = () => {
     const [ users, setUsers ] = useState([]);
 
     const fetchUsers = async () => {
-        const response = await get("/user");
+        //
+        const { id } = JSON.parse(localStorage.getItem("user"));
+        const response = await get(`/user/${id}`);
+        //
         console.log(response);
         setUsers(response.data);
     }
@@ -30,8 +34,10 @@ const Chat = () => {
 
     return (
         <div>
-            {users.length > 0 && <DrawerList users={users} />}
-            <ModalRegister fetchUsers={fetchUsers} />
+            <HeaderLayout>
+                {users.length > 0 && <DrawerList users={users} />}
+                <ModalRegister fetchUsers={fetchUsers} />
+            </HeaderLayout>
         </div>
     )
 }

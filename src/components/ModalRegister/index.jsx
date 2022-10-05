@@ -4,14 +4,14 @@ import { post } from "../../service";
 
 const ModalRegister = ({ fetchUsers }) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
-//Add
+
   const [ user, setUser ] = useState({
     name: "",
     email: "",
   })
-//
+
   const handleOpenModal = () => setIsModalOpen(!isModalOpen);
-//Add
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -19,9 +19,10 @@ const ModalRegister = ({ fetchUsers }) => {
       [name]: value,
     })
   }
-  
+  //Modified
   const handleOnSubmit = async () => {
     const response = await post("/user", user);
+    localStorage.setItem("user", JSON.stringify(response.data))
     handleOpenModal();
     await fetchUsers();
   }
